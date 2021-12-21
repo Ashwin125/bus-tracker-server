@@ -150,4 +150,28 @@ public class VehicleController {
             );
         }
     }
+
+    @PostMapping("/{id}/status")
+    public ResponseEntity<VehicleResponse> changeVehicleStatus(@PathVariable String id, @RequestBody Vehicle vehicle) {
+        try {
+            Vehicle updatedVehicle = vehicleService.changeVehicleStatus(id, vehicle.getIsOccupied());
+
+            VehicleResponse res = VehicleResponse
+                .builder()
+                .vehicle(updatedVehicle)
+                .message("OK")
+                .build();
+
+            return new ResponseEntity<>(res, HttpStatus.OK);
+
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(VehicleResponse
+                .builder()
+                .message("Something went wrong.")
+                .build(),
+                HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
 }

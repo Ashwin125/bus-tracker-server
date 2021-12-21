@@ -55,4 +55,10 @@ public class VehicleService {
         }
         return mongoTemplate.find(query, Vehicle.class);
     }
+
+    public Vehicle changeVehicleStatus(String id, Boolean isOccupied) {
+        Vehicle vehicle = getVehicleById(id);
+        vehicle.setIsOccupied(isOccupied);
+        return vehicleRepository.save(vehicle);
+    }
 }
